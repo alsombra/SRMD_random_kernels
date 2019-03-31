@@ -246,7 +246,7 @@ class Solver(object):
         loss = reconst_loss(reconst, y)
 
         # Print out log info 
-        print("model trained for {} epochs, loss: {:.4f}".format(epoch, loss.item()))
+        print("model trained for {} epochs, loss: {:.4f}".format(self.start_step, loss.item()))
         
         tmp = self.create_grid(lr_image, hr_image, reconst)
         grid_PIL = self.img_add_info(tmp, epoch, loss)  

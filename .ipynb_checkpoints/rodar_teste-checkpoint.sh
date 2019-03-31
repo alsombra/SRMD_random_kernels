@@ -18,4 +18,4 @@ python main.py --scale_factor=2 --mode='test' --use_test_set='yes' --num_workers
 
 #Para teste fora do test set (test)
 
-python main.py --scale_factor=2 --mode='test' --use_test_set='no' --num_workers=0 --total_step=300000 --model_save_step=1000 --sample_step=100 --num_channels=18 --batch_size=1 --image_size=64 --trained_model=200000.pth --test_image_path='./test_images/0.809_lr_100.png'
+python main.py --scale_factor=2 --mode='test' --use_test_set='no' --num_workers=0 --total_step=300000 --model_save_step=1000 --sample_step=100 --num_channels=18 --batch_size=1 --image_size=64 --trained_model=200000.pth.tar --test_image_path='./test_images/___lr___.png'
