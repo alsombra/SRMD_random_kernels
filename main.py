@@ -6,7 +6,7 @@ from solver import Solver
 import time
 import pickle
 
-DATA_PATH = '../data/img_align_celeba'
+DATA_PATH = '/data/antonio/img_align_celeba'
 
 
 def save_obj(obj, name ):
