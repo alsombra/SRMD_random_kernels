@@ -6,12 +6,17 @@ from solver import Solver
 import time
 import pickle
 
-DATA_PATH = '/data/antonio/img_align_celeba/'
+DATA_PATH = '/data/antonio/img_align_celeba'
+
 
 def save_obj(obj, name ):
     with open('obj/'+ name + '.pkl', 'wb') as f:
         pickle.dump(obj, f, pickle.HIGHEST_PROTOCOL)
 
+def load_obj(name ):
+    with open('obj/' + name + '.pkl', 'rb') as f:
+        return pickle.load(f)
+    
 def str2bool(v):
     if v.lower() in ('yes', 'true', 't', 'y', '1'):
         return True
@@ -32,15 +37,19 @@ def main(config, scope):
 
     # Data loader
     data_loader = get_loader(config.image_path, config)
-
+    
     # Solver
+    
     solver = Solver(data_loader, config)
-
+            
     def load(filename, *args):
         solver.load(filename)
 
     def save(filename, *args):
         solver.save(filename)
+
+    def evaluate(test_data, output):
+        pass
 
     def decode(input):
         return input
@@ -48,14 +57,11 @@ def main(config, scope):
     if config.mode == 'train':
         solver.train()
     elif config.mode == 'test':
-        if config.test_mode == 'single':
-            solver.test()
-        elif config.test_mode == 'many':
-            solver.many_tests()
-        elif config.test_mode == 'pick_from_set':
+        if config.use_test_set == 'yes':
             solver.test_and_error()
-        elif config.test_mode == 'evaluate':
-            solver.evaluate()
+        elif config.use_test_set == 'no':
+            solver.test()
+    
 
 
 if __name__ == '__main__':
@@ -78,10 +84,8 @@ if __name__ == '__main__':
     parser.add_argument('--trained_model', type=str, default=None) ########## mudei pra receber string
 
     # Test
-    parser.add_argument('--test_mode', type=str, default='pick_from_set', choices=['single', 'many', 'pick_from_set', 'evaluate'])
-    parser.add_argument('--test_image_path', type=str) #Use with a single file for 'single_test' and a folder for 'many_tests'
-    parser.add_argument('--evaluation_step', type=int, default=10) #evaluation log print step
-    parser.add_argument('--evaluation_size', type=int, default=10) #if evaluation size == -1 takes all test_set
+    parser.add_argument('--use_test_set', type=str, default='no', choices=['yes', 'no'])
+    parser.add_argument('--test_image_path', type=str) #Use it when --use_test_set=no
 
     # Misc
     parser.add_argument('--mode', type=str, default='train', choices=['train', 'test'])

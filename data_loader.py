@@ -64,7 +64,7 @@ class ImageFolder(data.Dataset):
         transform = transforms.ToTensor()
         lr_image, hr_image = transform(lr_image), transform(hr_image)
 
-        return lr_image.to(torch.float64), hr_image.to(torch.float64)
+        return image_path, lr_image.to(torch.float64), hr_image.to(torch.float64)
 
     def __len__(self):
         """Return the total number of image files."""
