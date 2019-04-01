@@ -28,7 +28,19 @@ def main(config, scope):
     if not os.path.exists(config.model_save_path):
         os.makedirs(config.model_save_path)
     if not os.path.exists(config.result_path):
-        os.makedirs(config.result_path)
+        os.makedirs(config.result_path)   
+    if not os.path.exists('/samples'):
+        os.makedirs('/samples')
+    if not os.path.exists(config.result_path + '/grids'):
+        os.makedirs(config.result_path + '/grids')
+    if not os.path.exists(config.result_path + '/HR_images'):
+        os.makedirs(config.result_path + '/HR_images')
+    if not os.path.exists(config.result_path + '/HR_bicub_images'):
+        os.makedirs(config.result_path + '/HR_bicub_images')
+    if not os.path.exists(config.result_path + '/HR_HAT_images'):
+        os.makedirs(config.result_path + '/HR_HAT_images')
+    if not os.path.exists(config.result_path + '/LR_snapshot_images'):
+        os.makedirs(config.result_path + '/LR_images_snapshot')  
 
     # Data loader
     data_loader = get_loader(config.image_path, config)

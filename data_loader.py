@@ -34,7 +34,9 @@ class ImageFolder(data.Dataset):
         """Read an image from a file and preprocesses it and returns."""
         image_path = self.image_paths[index]
         image = Image.open(image_path).convert('RGB')
-
+        if np.array(image).shape==4:
+            image = np.array(image)[:,:,:3]
+            image = Image.fromarray(image)
         # target (high-resolution image)
         #Random Crop (original method, for any dataset)
         ######################################################

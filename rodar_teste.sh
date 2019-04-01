@@ -22,7 +22,7 @@ python main.py --scale_factor=2 --mode='test' --test_mode='single' --num_workers
 
 #Para muitos teste fora do test set (tests) -> passe o folder no test_image_path
 
-python main.py --scale_factor=2 --mode='test' --test_mode='many' --num_workers=0 --total_step=300000 --model_save_step=1000 --sample_step=100 --num_channels=18 --batch_size=1 --image_size=64 --trained_model=50000.pth.tar --test_image_path='./results/LR_images_snapshot/'
+python main.py --scale_factor=2 --mode='test' --test_mode='many' --num_workers=0 --total_step=300000 --model_save_step=1000 --sample_step=100 --num_channels=18 --batch_size=1 --image_size=64 --trained_model=200000.pth --test_image_path='./results/LR_images_snapshot/'
 
 #para evaluation (evaluate) - (does test_and_error many times)
 python main.py --scale_factor=2 --mode='test' --test_mode='evaluate' --num_workers=0 --total_step=300000 --model_save_step=1000 --sample_step=100 --num_channels=18 --batch_size=1 --image_size=64 --trained_model=200000.pth --evaluation_step=10 --evaluation_size=2
