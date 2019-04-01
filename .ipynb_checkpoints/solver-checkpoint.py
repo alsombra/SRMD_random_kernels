@@ -17,7 +17,8 @@ class Solver(object):
     def __init__(self, data_loader, config):
         # Data loader
         self.data_loader = data_loader
-
+        self.data_iter = iter(self.data_loader)
+        
         # Model hyper-parameters
         self.num_blocks = config.num_blocks  # num_blocks = 11
         self.num_channels = config.num_channels  # num_channels = 18
@@ -109,7 +110,7 @@ class Solver(object):
         image_hr_bicubic = image_hr_bicubic.transpose(0,3,1,2)
         image_hr_bicubic = Scaling(image_hr_bicubic)
         image_hr_bicubic = torch.from_numpy(image_hr_bicubic).double().to(self.device) # NUMPY to TORCH
-        hr_image_hat = reconst
+        hr_image_hat = reconst  
         hr_image_hat = hr_image_hat.data.cpu().numpy()
         hr_image_hat = np.squeeze(hr_image_hat).transpose((1, 2, 0))
         hr_image_hat = (hr_image_hat*255).astype(np.uint8)
@@ -241,8 +242,7 @@ class Solver(object):
         reconst_loss = nn.MSELoss()
 
             # Data iter
-        data_iter = iter(self.data_loader)
-        img_paths, x, y = next(data_iter)
+        img_paths, x, y = next(self.data_iter)
         lr_image = x[:,:3,:,:]
         hr_image = y
         lr_image,hr_image, x, y = lr_image.to(self.device), hr_image.to(self.device), x.to(self.device), y.to(self.device)
@@ -343,7 +343,6 @@ class Solver(object):
         #return this ^
 
         #Saving Image Bicubic and HR Image Hat
-        random_number = np.random.rand(1)[0]
         Image.fromarray(image_hr_bicubic_single).save('./results/HR_bicub_images/'+ os.path.basename(self.test_image_path)+'_hr_bic_{}.png'.format(step))
         Image.fromarray(hr_image_hat_np_png).save('./results/HR_HAT_images/'+ os.path.basename(self.test_image_path)+'_hr_hat_{}.png'.format(step))
 
@@ -356,6 +355,7 @@ class Solver(object):
         grid = make_grid(pairs, 1) 
         tmp = np.squeeze(grid.cpu().numpy().transpose((1, 2, 0)))
         tmp = (255 * tmp).astype(np.uint8)
+        random_number = np.random.rand(1)[0]
         Image.fromarray(tmp).save('./results/grids/'+ os.path.basename(self.test_image_path).split('.')[0]+'_grid_{}.png'.format(step))
         
     def many_tests(self):

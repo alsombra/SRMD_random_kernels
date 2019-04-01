@@ -29,8 +29,8 @@ def main(config, scope):
         os.makedirs(config.model_save_path)
     if not os.path.exists(config.result_path):
         os.makedirs(config.result_path)   
-    if not os.path.exists('/samples'):
-        os.makedirs('/samples')
+    if not os.path.exists('./samples'):
+        os.makedirs('./samples')
     if not os.path.exists(config.result_path + '/grids'):
         os.makedirs(config.result_path + '/grids')
     if not os.path.exists(config.result_path + '/HR_images'):

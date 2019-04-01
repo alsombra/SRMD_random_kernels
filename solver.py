@@ -17,7 +17,8 @@ class Solver(object):
     def __init__(self, data_loader, config):
         # Data loader
         self.data_loader = data_loader
-
+        self.data_iter = iter(self.data_loader)
+        
         # Model hyper-parameters
         self.num_blocks = config.num_blocks  # num_blocks = 11
         self.num_channels = config.num_channels  # num_channels = 18
@@ -241,8 +242,7 @@ class Solver(object):
         reconst_loss = nn.MSELoss()
 
             # Data iter
-        data_iter = iter(self.data_loader)
-        img_paths, x, y = next(data_iter)
+        img_paths, x, y = next(self.data_iter)
         lr_image = x[:,:3,:,:]
         hr_image = y
         lr_image,hr_image, x, y = lr_image.to(self.device), hr_image.to(self.device), x.to(self.device), y.to(self.device)
