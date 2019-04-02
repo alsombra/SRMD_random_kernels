@@ -39,8 +39,13 @@ def main(config, scope):
         os.makedirs(config.result_path + '/HR_bicub_images')
     if not os.path.exists(config.result_path + '/HR_HAT_images'):
         os.makedirs(config.result_path + '/HR_HAT_images')
-    if not os.path.exists(config.result_path + '/LR_snapshot_images'):
-        os.makedirs(config.result_path + '/LR_images_snapshot')  
+#    if not os.path.exists(config.result_path + '/LR_snapshot_images'):
+#        os.makedirs(config.result_path + '/LR_images_snapshot')  
+    try:
+        os.makedirs(config.result_path + '/LR_images_snapshot')
+    except OSError:
+        pass
+
 
     # Data loader
     data_loader = get_loader(config.image_path, config)
