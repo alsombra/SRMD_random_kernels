@@ -27,6 +27,7 @@ class Solver(object):
 
         # Training settings
         self.total_step = config.total_step # 20000
+        self.loss_function = config.loss_function
         self.lr = config.lr 
         self.beta1 = config.beta1 # 0.5  ????????????????? testar 0.9 ou 0.001
         self.beta2 = config.beta2 # 0.99  ???????????????
@@ -160,7 +161,10 @@ class Solver(object):
         self.model.train()
 
         # Reconst loss
-        reconst_loss = nn.MSELoss()
+        if self.loss_function == 'l1':
+            reconst_loss = nn.L1Loss()
+        elif self.loss_function == 'l2':
+            reconst_loss = nn.MSELoss()
 
         # Data iter
         data_iter = iter(self.data_loader)
@@ -223,7 +227,7 @@ class Solver(object):
                     
             # Save check points
             if (step+1) % self.model_save_step == 0:                
-                self.save(step, loss.item(), os.path.join(self.model_save_path, '{}.pth.tar'.format(str(step))))
+                self.save(step+1, loss.item(), os.path.join(self.model_save_path, '{}.pth.tar'.format(self.loss_function.upper() + '_' + str(step+1))))
 
     def save(self, step, current_loss, filename):
         model = self.model.state_dict()
