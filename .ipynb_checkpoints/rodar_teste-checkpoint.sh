@@ -4,14 +4,13 @@ python main.py \
 --scale_factor=2 \
 --mode=train \
 --num_workers=0 \
---total_step=50000 \
+--total_step=61001 \
 --model_save_step=1000 \
 --sample_step=100 \
 --num_channels=18 \
---batch_size=1 \
+--batch_size=16 \
 --image_size=64 \
---loss_function='l1' \
---trained_model=None
+--loss_function='l1'
 
 #Para teste no test set (test_and_error)
 
